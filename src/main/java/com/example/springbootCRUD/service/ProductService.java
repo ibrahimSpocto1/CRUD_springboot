@@ -1,48 +1,25 @@
 package com.example.springbootCRUD.service;
 
-import com.example.springbootCRUD.entity.Product;
-import com.example.springbootCRUD.repo.ProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.springbootCRUD.model.ProductModel;
 
 import java.util.List;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    @Autowired
-    private ProductRepo repo;
+    ProductModel saveProduct(ProductModel product);
 
-    public Product saveProduct(Product product) {
-        return repo.save(product);
-    }
+    List<ProductModel> saveProducts(List<ProductModel> products);
 
-    public List<Product> saveProducts(List<Product> products) {
-        return repo.saveAll(products);
-    }
+    List<ProductModel> getProducts();
 
-    public List<Product> getProducts() {
-        return repo.findAll();
-    }
 
-    public Product getProductById(int id) {
-        return repo.findById(id).orElse(null);
-    }
+    ProductModel getProductById(int id);
 
-    public Product getProductByName(String name) {
-        return repo.findByName(name);
-    }
+    ProductModel getProductByName(String name);
+    String deleteProduct(int id);
+    ProductModel updateProduct(ProductModel product);
 
-    public String deleteProduct(int id) {
-        repo.deleteById(id);
-        return "product removed !! " + id;
-    }
+    List<ProductModel> productLessThan(double price);
+    List<ProductModel> findByNameSorted(String name);
 
-    public Product updateProduct(Product product) {
-        Product existingProduct = repo.findById(product.getId()).orElse(null);
-        existingProduct.setName(product.getName());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setPrice(product.getPrice());
-        return repo.save(existingProduct);
-        }
 }
